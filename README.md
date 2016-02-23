@@ -176,7 +176,7 @@ LinkEnforcedGPOByName
 In this example, we link a GPO by GUID to the Example OU and disable the link. We also leave off the domain part of the OU DN so it's generated automatically for us.
 
 ```
-configuration LinkEnforcedGPOByName
+configuration LinkGPOByGuidAndDisable
 {
     Import-DscResource -Module xGPOLink
 
@@ -192,5 +192,5 @@ configuration LinkEnforcedGPOByName
         }
     }
 }
-LinkEnforcedGPOByName
+LinkGPOByGuidAndDisable
 ```
