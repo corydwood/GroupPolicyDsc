@@ -90,7 +90,7 @@ configuration UnblockInheritance
         xGPInheritance ExampleOU
         {
            Target = 'OU=Example,'
-           Ensure = 'Absent'
+           Ensure = 'Present'
         }
     }
 }
