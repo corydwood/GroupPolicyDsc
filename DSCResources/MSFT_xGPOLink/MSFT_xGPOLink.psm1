@@ -122,11 +122,11 @@ function Set-TargetResource {
                 $newParams += @{Guid = $gpo.Id}
             }
             else {$newParams += @{Guid = $Identity}}
-            if ($Domain) {$setParams += @{Domain = $Domain}}
+            if ($Domain) {$newParams += @{Domain = $Domain}}
             if ($Enforced) {$newParams += @{Enforced = $Enforced}}
             if ($LinkEnabled) {$newParams += @{LinkEnabled = $LinkEnabled}}
             if ($Order) {$newParams += @{Order = $Order}}
-            if ($Server) {$setParams += @{Server = $Server}}
+            if ($Server) {$newParams += @{Server = $Server}}
             Write-Verbose 'Creating GPO Link'
             New-GPLink @newParams
         }
