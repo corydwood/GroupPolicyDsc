@@ -1,8 +1,0 @@
-[ClassVersion("1.0.0"), FriendlyName("xGPInheritance")]
-class MSFT_xGPInheritance :  OMI_BaseResource
-{
-	[Key] String Target;
-	[write] String Domain;
-	[write] String Server;
-	[write,ValueMap{"Present", "Absent"},Values{"Present", "Absent"}] string Ensure;
-};
