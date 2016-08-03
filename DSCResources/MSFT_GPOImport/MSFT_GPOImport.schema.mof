@@ -1,0 +1,12 @@
+[ClassVersion("1.0.0"), FriendlyName("GPOImport")]
+class MSFT_GPOImport :  OMI_BaseResource
+{
+	[Key] String TargetName;
+	[required] String Path;
+	[required] String BackupIdentity;
+	[write,ValueMap{"Name", "Guid"},Values{"Name", "Guid"}] string BackupIdentityType;
+	[write] String Domain;
+	[write] String MigrationTable;
+	[write] String Server;
+	[write,ValueMap{"Present", "Absent"},Values{"Present", "Absent"}] string Ensure;
+};
