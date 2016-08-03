@@ -1,0 +1,13 @@
+[ClassVersion("1.0.0"), FriendlyName("xGPOLink")]
+class MSFT_xGPOLink :  OMI_BaseResource
+{
+	[Key] String Identity;
+	[Write,ValueMap{"Name", "Guid"},Values{"Name", "Guid"}] String IdentityType;
+	[Key] String Target;
+	[Write] String Domain;
+	[Write,ValueMap{"Yes", "No"},Values{"Yes", "No"}] String Enforced;
+	[Write,ValueMap{"Yes", "No"},Values{"Yes", "No"}] String LinkEnabled;
+	[Write] Sint16 Order;
+	[Write] String Server;
+	[Write,ValueMap{"Present", "Absent"},Values{"Present", "Absent"}] String Ensure;
+};
