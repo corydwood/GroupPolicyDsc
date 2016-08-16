@@ -4,28 +4,54 @@
     param
     (
         [parameter(Mandatory = $true)]
-        [string]$TargetName,
+        [string]
+        $TargetName,
+
         [parameter(Mandatory = $true)]
-        [string]$Path,
+        [string]
+        $Path,
+
         [parameter(Mandatory = $true)]
-        [string]$BackupIdentity,
+        [string]
+        $BackupIdentity,
+
         [ValidateSet('Name','Guid')]
-        [string]$BackupIdentityType = 'Name',
-        [string]$Domain,
-        [string]$MigrationTable,
-        [string]$Server,
+        [string]
+        $BackupIdentityType = 'Name',
+
+        [string]
+        $Domain,
+
+        [string]
+        $MigrationTable,
+
+        [string]
+        $Server,
+
         [ValidateSet('Present')]
-        [string]$Ensure = 'Present'
+        [string]
+        $Ensure = 'Present'
     )
-    Import-Module GroupPolicy -Verbose:$false
-    $params = @{
+
+    Import-Module -Name GroupPolicy -Verbose:$false
+    $getGPOParams = @{
         Name = $TargetName
         ErrorAction = 'SilentlyContinue'
     }
-    if ($Domain) {$params += @{Domain = $Domain}}
-    if ($Server) {$params += @{Server = $Server}}
-    Write-Verbose 'Getting GPO'
-    $gpo = Get-GPO @params
+    if ($Domain)
+    {
+        $getGPOParams += @{
+            Domain = $Domain
+        }
+    }
+    if ($Server)
+    {
+        $getGPOParams += @{
+            Server = $Server
+        }
+    }
+    Write-Verbose -Message 'Getting GPO'
+    $gpo = Get-GPO @getGPOParams
     $targetResource = @{
         TargetName = $TargetName
         Path = $Path
@@ -36,14 +62,20 @@
         Server = $null
         Ensure = 'Absent'
     }
-    if ($MigrationTable) {$targetResource.MigrationTable = $MigrationTable}
-    if ($Server) {$targetResource.Server = $Server}
+    if ($MigrationTable)
+    {
+        $targetResource.MigrationTable = $MigrationTable
+    }
+    if ($Server)
+    {
+        $targetResource.Server = $Server
+    }
     if ($gpo)
     {
         $targetResource.Domain = $gpo.DomainName
         $targetResource.Ensure = 'Present'
     }
-    $targetResource
+    Write-Output -InputObject $targetResource
 }
 
 function Set-TargetResource
@@ -51,32 +83,73 @@ function Set-TargetResource
     param
     (
         [parameter(Mandatory = $true)]
-        [string]$TargetName,
+        [string]
+        $TargetName,
+
         [parameter(Mandatory = $true)]
-        [string]$Path,
+        [string]
+        $Path,
+
         [parameter(Mandatory = $true)]
-        [string]$BackupIdentity,
+        [string]
+        $BackupIdentity,
+
         [ValidateSet('Name','Guid')]
-        [string]$BackupIdentityType = 'Name',
-        [string]$Domain,
-        [string]$MigrationTable,
-        [string]$Server,
+        [string]
+        $BackupIdentityType = 'Name',
+
+        [string]
+        $Domain,
+
+        [string]
+        $MigrationTable,
+
+        [string]
+        $Server,
+
         [ValidateSet('Present')]
-        [string]$Ensure = 'Present'
+        [string]
+        $Ensure = 'Present'
     )
-    Import-Module GroupPolicy -Verbose:$false
-    $params = @{
+
+    Import-Module -Name GroupPolicy -Verbose:$false
+    $importGPOParams = @{
         TargetName = $TargetName
         Path = $Path
         CreateIfNeeded = $true
     }
-    if ($BackupIdentityType -eq 'Name') {$params += @{BackupGpoName = $BackupIdentity}}
-    else {$params += @{BackupId = $BackupIdentity}}
-    if ($Domain) {$params += @{Domain = $Domain}}
-    if ($MigrationTable) {$params += @{MigrationTable = $MigrationTable}}
-    if ($Server) {$params += @{Server = $Server}}
-    Write-Verbose 'Importing GPO'
-    $null = Import-GPO @params
+    if ($BackupIdentityType -eq 'Name')
+    {
+        $importGPOParams += @{
+            BackupGpoName = $BackupIdentity
+        }
+    }
+    else
+    {
+        $importGPOParams += @{
+            BackupId = $BackupIdentity
+        }
+    }
+    if ($Domain)
+    {
+        $importGPOParams += @{
+            Domain = $Domain
+        }
+    }
+    if ($MigrationTable)
+    {
+        $importGPOParams += @{
+            MigrationTable = $MigrationTable
+        }
+    }
+    if ($Server)
+    {
+        $importGPOParams += @{
+            Server = $Server
+        }
+    }
+    Write-Verbose -Message 'Importing GPO'
+    $null = Import-GPO @importGPOParams
 }
 
 function Test-TargetResource
@@ -85,20 +158,42 @@ function Test-TargetResource
     param
     (
         [parameter(Mandatory = $true)]
-        [string]$TargetName,
+        [string]
+        $TargetName,
+
         [parameter(Mandatory = $true)]
-        [string]$Path,
+        [string]
+        $Path,
+
         [parameter(Mandatory = $true)]
-        [string]$BackupIdentity,
+        [string]
+        $BackupIdentity,
+
         [ValidateSet('Name','Guid')]
-        [string]$BackupIdentityType = 'Name',
-        [string]$Domain,
-        [string]$MigrationTable,
-        [string]$Server,
+        [string]
+        $BackupIdentityType = 'Name',
+
+        [string]
+        $Domain,
+
+        [string]
+        $MigrationTable,
+
+        [string]
+        $Server,
+
         [ValidateSet('Present')]
-        [string]$Ensure = 'Present'
+        [string]
+        $Ensure = 'Present'
     )
+
     $targetResource = Get-TargetResource @PSBoundParameters
-    if ($targetResource.Ensure -eq 'Present') {$true}
-    else {$false}
+    if ($targetResource.Ensure -eq 'Present')
+    {
+        Write-Output -InputObject $true
+    }
+    else 
+    {
+        Write-Output -InputObject $false
+    }
 }

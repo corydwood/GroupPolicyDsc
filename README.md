@@ -4,44 +4,71 @@
 
 The **GroupPolicyDsc** module contains DSC resources for configuring Group Policy.
 
-## Contributing
-Please check out common DSC Resources [contributing guidelines](https://github.com/PowerShell/DscResource.Kit/blob/master/CONTRIBUTING.md).
+This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
+For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
+
+## How to Contribute
+If you would like to contribute to this repository, please read the DSC Resource Kit [contributing guidelines](https://github.com/PowerShell/DscResource.Kit/blob/master/CONTRIBUTING.md).
 
 ## Resources
 
 * **GPInheritance** blocks or unblocks inheritance for a specified domain or organizational unit (OU).
-* **GPOImport** imports the Group Policy settings from a backed-up GPO into a new GPO. It won't import settings into an existing GPO.
+* **GPOImport** imports the Group Policy settings from a backed-up GPO into a new GPO.
+It won't import settings into an existing GPO.
 * **GPOLink** links a GPO to a site, domain, or organizational unit (OU).
 
 ### GPInheritance
 
-* **Target**: Specifies the domain or the OU for which to block or unblock inheritance by its LDAP distinguished name. You can also leave off the domain part of the distinguished name and it will be generated automatically. See the example below.
-* **Domain**: Optional. Specifies the domain to run against.
-* **Server**: Optional. Specifies the name of the domain controller that this resource contacts to complete the operation. You can specify either the fully qualified domain name (FQDN) or the host name.
-* **Ensure**: Whether inheritance should be blocked (Absent) or unblocked (Present). Defaults to Present.
+* **Target**: Specifies the domain or the OU for which to block or unblock inheritance by its LDAP distinguished name.
+You can also leave off the domain part of the distinguished name and it will be generated automatically.
+See the UnblockInheritance.ps1 example in the Examples folder.
+* **Domain**: Specifies the domain to run against.
+Optional.
+* **Server**: Specifies the name of the domain controller that this resource contacts to complete the operation.
+You can specify either the fully qualified domain name (FQDN) or the host name.
+Optional.
+* **Ensure**: Whether inheritance should be blocked (Absent) or unblocked (Present).
+Defaults to Present.
 
 ### GPOImport
 
 * **TargetName**: Specifies the display name of the GPO into which the settings are to be imported.
 * **Path**: Specifies the path to the backup directory.
 * **BackupIdentity**: Specifies the display name or backup ID of the backed-up GPO from which to import the settings.
-* **BackupIdentityType**: Specifies the type of the BackupIdentity (Name or Guid). Defaults to Name.
-* **Domain**: Optional. Specifies the domain to run against.
+* **BackupIdentityType**: Specifies the type of the BackupIdentity (Name or Guid).
+Defaults to Name.
+* **Domain**: Specifies the domain to run against.
+Optional.
 * **MigrationTable**: Specifies the path to a migration table file.
-* **Server**: Optional. Specifies the name of the domain controller that this resource contacts to complete the operation. You can specify either the fully qualified domain name (FQDN) or the host name.
-* **Ensure**: Must be Present. Defaults to Present.
+* **Server**: Specifies the name of the domain controller that this resource contacts to complete the operation.
+You can specify either the fully qualified domain name (FQDN) or the host name.
+Optional.
+* **Ensure**: Must be Present.
+Defaults to Present.
 
 ### GPOLink
 
 * **Identity**: Specifies the GPO to link by its display name or GUID.
-* **IdentityType**: Specifies the type of the Identity (Name or Guid). Defaults to Name.
-* **Target**: Specifies the LDAP distinguished name of the site, domain, or OU to which to link the GPO. You can also leave off the domain part of the distinguished name and it will be generated automatically. See the example below.
-* **Domain**: Optional. Specifies the domain to run against.
-* **Enforced**: Specifies whether the GPO link is enforced. You can specify Yes or No. Defaults to No.
-* **LinkEnabled**: Specifies whether the GPO link is enabled. You can specify Yes or No. Defaults to Yes.
-* **Order**: Specifies the link order for the GPO link. You can specify a number that is between one and the current number of GPO links to the target site, domain, or OU, plus one.
-* **Server**: Optional. Specifies the name of the domain controller that this resource contacts to complete the operation. You can specify either the fully qualified domain name (FQDN) or the host name.
-* **Ensure**: Whether the GPO Link should exist (Present) or not (Absent). Defaults to Present.
+* **IdentityType**: Specifies the type of the Identity (Name or Guid).
+Defaults to Name.
+* **Target**: Specifies the LDAP distinguished name of the site, domain, or OU to which to link the GPO.
+You can also leave off the domain part of the distinguished name and it will be generated automatically.
+See the GpoLinkByGuidAndDisable.ps1 example in the Examples folder.
+* **Domain**: Specifies the domain to run against.
+Optional.
+* **Enforced**: Specifies whether the GPO link is enforced.
+You can specify Yes or No.
+Defaults to No.
+* **LinkEnabled**: Specifies whether the GPO link is enabled.
+You can specify Yes or No.
+Defaults to Yes.
+* **Order**: Specifies the link order for the GPO link.
+You can specify a number that is between one and the current number of GPO links to the target site, domain, or OU, plus one.
+* **Server**: Specifies the name of the domain controller that this resource contacts to complete the operation.
+You can specify either the fully qualified domain name (FQDN) or the host name.
+Optional.
+* **Ensure**: Whether the GPO Link should exist (Present) or not (Absent).
+Defaults to Present.
 
 ## Versions
 

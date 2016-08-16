@@ -50,9 +50,15 @@ try
             Server = 'localhost'
             Ensure = 'Absent'
         }
-        $fakeADDomain = @{DistinguishedName = $rootDSE}
-        $fakeGPInheritanceNotBlocked = @{GpoInheritanceBlocked = $false}
-        $fakeGPInheritanceBlocked = @{GpoInheritanceBlocked = $true}
+        $fakeADDomain = @{
+            DistinguishedName = $rootDSE
+        }
+        $fakeGPInheritanceNotBlocked = @{
+            GpoInheritanceBlocked = $false
+        }
+        $fakeGPInheritanceBlocked = @{
+            GpoInheritanceBlocked = $true
+        }
         #endregion
 
 

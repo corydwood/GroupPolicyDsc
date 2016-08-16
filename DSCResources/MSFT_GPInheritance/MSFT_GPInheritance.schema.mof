@@ -1,8 +1,8 @@
 [ClassVersion("1.0.0"), FriendlyName("GPInheritance")]
 class MSFT_GPInheritance :  OMI_BaseResource
 {
-	[Key] String Target;
-	[write] String Domain;
-	[write] String Server;
-	[write,ValueMap{"Present", "Absent"},Values{"Present", "Absent"}] string Ensure;
+    [Key] String Target;
+    [write] String Domain;
+    [write] String Server;
+    [write,ValueMap{"Present", "Absent"},Values{"Present", "Absent"}] string Ensure;
 };

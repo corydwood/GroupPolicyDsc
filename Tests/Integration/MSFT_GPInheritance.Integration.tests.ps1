@@ -1,6 +1,5 @@
 ﻿$Global:DSCModuleName      = 'GroupPolicyDsc'
 $Global:DSCResourceName    = 'MSFT_GPInheritance'
-# /TODO
 
 #region HEADER
 [String] $moduleRoot = Split-Path -Parent (Split-Path -Parent (Split-Path -Parent $Script:MyInvocation.MyCommand.Path))
@@ -19,8 +18,6 @@ $TestEnvironment = Initialize-TestEnvironment `
     -DSCResourceName $Global:DSCResourceName `
     -TestType Integration 
 #endregion
-
-# TODO: Other Init Code Goes Here...
 
 # Using try/finally to always cleanup even if something awful happens.
 try
@@ -59,6 +56,4 @@ finally
     #region FOOTER
     Restore-TestEnvironment -TestEnvironment $TestEnvironment
     #endregion
-
-    # TODO: Other Optional Cleanup Code Goes Here...
 }
