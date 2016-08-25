@@ -19,7 +19,7 @@ It won't import settings into an existing GPO.
 
 ### GPInheritance
 
-* **Target**: Specifies the domain or the OU for which to block or unblock inheritance by its LDAP distinguished name.
+* **TargetDN**: Specifies the domain or the OU for which to block or unblock inheritance by its LDAP distinguished name.
 You can also leave off the domain part of the distinguished name and it will be generated automatically.
 See the UnblockInheritance.ps1 example in the Examples folder.
 * **Domain**: Specifies the domain to run against.
@@ -32,7 +32,7 @@ Defaults to Present.
 
 ### GPOImport
 
-* **TargetName**: Specifies the display name of the GPO into which the settings are to be imported.
+* **Name**: Specifies the display name of the GPO into which the settings are to be imported.
 * **Path**: Specifies the path to the backup directory.
 * **BackupIdentity**: Specifies the display name or backup ID of the backed-up GPO from which to import the settings.
 * **BackupIdentityType**: Specifies the type of the BackupIdentity (Name or Guid).
@@ -40,6 +40,7 @@ Defaults to Name.
 * **Domain**: Specifies the domain to run against.
 Optional.
 * **MigrationTable**: Specifies the path to a migration table file.
+You can use a migration table to map security principals and UNC paths across domains.
 * **Server**: Specifies the name of the domain controller that this resource contacts to complete the operation.
 You can specify either the fully qualified domain name (FQDN) or the host name.
 Optional.
@@ -48,10 +49,8 @@ Defaults to Present.
 
 ### GPOLink
 
-* **Identity**: Specifies the GPO to link by its display name or GUID.
-* **IdentityType**: Specifies the type of the Identity (Name or Guid).
-Defaults to Name.
-* **Target**: Specifies the LDAP distinguished name of the site, domain, or OU to which to link the GPO.
+* **Name**: Specifies the name of the GPO to link.
+* **TargetDN**: Specifies the LDAP distinguished name of the site, domain, or OU to which to link the GPO.
 You can also leave off the domain part of the distinguished name and it will be generated automatically.
 See the GpoLinkByGuidAndDisable.ps1 example in the Examples folder.
 * **Domain**: Specifies the domain to run against.

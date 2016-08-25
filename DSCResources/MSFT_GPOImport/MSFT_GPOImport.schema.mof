@@ -1,12 +1,13 @@
 [ClassVersion("1.0.0"), FriendlyName("GPOImport")]
 class MSFT_GPOImport :  OMI_BaseResource
 {
-    [Key] String TargetName;
-    [required] String Path;
-    [required] String BackupIdentity;
-    [write,ValueMap{"Name", "Guid"},Values{"Name", "Guid"}] string BackupIdentityType;
-    [write] String Domain;
-    [write] String MigrationTable;
-    [write] String Server;
-    [write,ValueMap{"Present", "Absent"},Values{"Present", "Absent"}] string Ensure;
+    [Key, Description("Specifies the display name of the GPO into which the settings are to be imported.")] String Name;
+    [Required, Description("Specifies the path to the backup directory.")] String Path;
+    [Required, Description("Specifies the display name or backup ID of the backed-up GPO from which to import the settings.")] String BackupIdentity;
+    [Write, Description("Specifies the type of the BackupIdentity."), ValueMap{"Name", "Guid"}, Values{"Name", "Guid"}] String BackupIdentityType;
+    [Write, Description("Specifies the domain to run against.")] String Domain;
+    [Write, Description("Specifies the path to a migration table file. You can use a migration table to map security principals and UNC paths across domains.")] String MigrationTable;
+    [Write, Description("Specifies the name of the domain controller that this resource contacts to complete the operation.
+You can specify either the fully qualified domain name (FQDN) or the host name.")] String Server;
+    [Write, Description("Must be Present.") ,ValueMap{"Present"}, Values{"Present"}] String Ensure;
 };

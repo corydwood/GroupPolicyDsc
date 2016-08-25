@@ -4,15 +4,11 @@
     (
         [parameter(Mandatory = $true)]
         [string]
-        $Identity,
-
-        [ValidateSet('Name','Guid')]
-        [string]
-        $IdentityType = 'Name',
+        $Name,
 
         [parameter(Mandatory = $true)]
         [string]
-        $Target,
+        $TargetDN,
 
         [string]
         $Domain,
@@ -38,9 +34,9 @@
 
     Import-Module $PSScriptRoot\..\Helper.psm1 -Verbose:$false
     Import-Module -Name GroupPolicy -Verbose:$false
-    $target = Test-TargetDN @PSBoundParameters
+    $testTargetDN = Test-TargetDN @PSBoundParameters
     $gpInheritanceparams = @{
-        Target = $target
+        Target = $testTargetDN
     }
     if ($Server)
     {
@@ -58,9 +54,8 @@
     $gpoLinks = (Get-GPInheritance @gpInheritanceparams).GpoLinks
     $gpo = Get-GpoInfo @PSBoundParameters
     $targetResource = @{
-        Identity = $Identity
-        IdentityType = $IdentityType
-        Target = $Target
+        Name = $Name
+        TargetDN = $testTargetDN
         Domain = $null
         Enforced = $null
         LinkEnabled = $null
@@ -107,15 +102,11 @@ function Set-TargetResource {
     (
         [parameter(Mandatory = $true)]
         [string]
-        $Identity,
-
-        [ValidateSet('Name','Guid')]
-        [string]
-        $IdentityType = 'Name',
+        $Name,
 
         [parameter(Mandatory = $true)]
         [string]
-        $Target,
+        $TargetDN,
 
         [string]
         $Domain,
@@ -147,24 +138,13 @@ function Set-TargetResource {
         if ($targetResource.Ensure -eq 'Present')
         {
             $setGPLinkParams = @{
-                Target = $targetResource.Target
-            }
-            if ($IdentityType -eq 'Name')
-            {
+                Target = $targetResource.TargetDN
                 <#
                     Using the GpoId attribute of the GPO Links instead of the
                     Name attribute because the Name attribute may take a while
                     to replicate to all DCs if the GPO was recently created.
                 #>
-                $setGPLinkParams += @{
-                    Guid = $gpo.Id
-                }
-            }
-            else
-            {
-                $setGPLinkParams += @{
-                    Guid = $Identity
-                }
+                Guid = $gpo.Id
             }
             if ($Domain)
             {
@@ -202,24 +182,13 @@ function Set-TargetResource {
         else
         {
             $newGPLinkParams = @{
-                Target = $targetResource.Target
-            }
-            if ($IdentityType -eq 'Name')
-            {
+                Target = $targetResource.TargetDN
                 <#
                     Using the GpoId attribute of the GPO Links instead of the
                     Name attribute because the Name attribute may take a while
                     to replicate to all DCs if the GPO was recently created.
                 #>
-                $newGPLinkParams += @{
-                    Guid = $gpo.Id
-                }
-            }
-            else
-            {
-                $newGPLinkParams += @{
-                    Guid = $Identity
-                }
+                Guid = $gpo.Id
             }
             if ($Domain)
             {
@@ -258,24 +227,13 @@ function Set-TargetResource {
     else
     {
         $removeGPLinkParams = @{
-            Target = $targetResource.Target
-        }
-        if ($IdentityType -eq 'Name')
-        {
+            Target = $targetResource.TargetDN
             <#
                 Using the GpoId attribute of the GPO Links instead of the
                 Name attribute because the Name attribute may take a while
                 to replicate to all DCs if the GPO was recently created.
             #>
-            $removeGPLinkParams += @{
-                Guid = $gpo.Id
-            }
-        }
-        else
-        {
-            $removeGPLinkParams += @{
-                Guid = $Identity
-            }
+            Guid = $gpo.Id
         }
         if ($Domain)
         {
@@ -300,15 +258,11 @@ function Test-TargetResource {
     (
         [parameter(Mandatory = $true)]
         [string]
-        $Identity,
-
-        [ValidateSet('Name','Guid')]
-        [string]
-        $IdentityType = 'Name',
+        $Name,
 
         [parameter(Mandatory = $true)]
         [string]
-        $Target,
+        $TargetDN,
 
         [string]
         $Domain,
@@ -368,24 +322,39 @@ function Get-GpoInfo
     param
     (
         [parameter(Mandatory = $true)]
-        [string]$Identity,
-        [ValidateSet('Name','Guid')]
-        [string]$IdentityType = 'Name',
+        [string]
+        $Name,
+
         [parameter(Mandatory = $true)]
-        [string]$Target,
-        [string]$Domain,
+        [string]
+        $TargetDN,
+
+        [string]
+        $Domain,
+
         [ValidateSet('Yes','No')]
-        [string]$Enforced,
+        [string]
+        $Enforced,
+
         [ValidateSet('Yes','No')]
-        [string]$LinkEnabled,
-        [int16]$Order,
-        [string]$Server,
+        [string]
+        $LinkEnabled,
+
+        [int16]
+        $Order,
+
+        [string]
+        $Server,
+
         [ValidateSet('Present','Absent')]
-        [string]$Ensure = 'Present'
+        [string]
+        $Ensure = 'Present'
     )
 
     Import-Module -Name GroupPolicy -Verbose:$false
-    $getGPOParams = @{}
+    $getGPOParams = @{
+        Name = $Name
+    }
     if ($Server)
     {
         $getGPOParams += @{
@@ -396,18 +365,6 @@ function Get-GpoInfo
     {
         $getGPOParams += @{
             Domain = $Domain
-        }
-    }
-    if ($IdentityType -eq 'Name')
-    {
-        $getGPOParams += @{
-            Name = $Identity
-        }
-    }
-    else
-    {
-        $getGPOParams += @{
-            Guid = $Identity
         }
     }
     Write-Verbose -Message 'Getting GPO'

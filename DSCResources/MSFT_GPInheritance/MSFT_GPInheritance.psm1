@@ -5,7 +5,7 @@
     (
         [parameter(Mandatory = $true)]
         [string]
-        $Target,
+        $TargetDN,
 
         [string]
         $Domain,
@@ -20,15 +20,15 @@
 
     Import-Module $PSScriptRoot\..\Helper.psm1 -Verbose:$false
     Import-Module -Name GroupPolicy -Verbose:$false
-    $Target = Test-TargetDN @PSBoundParameters
+    $testTargetDN = Test-TargetDN @PSBoundParameters
     $targetResource =  @{
-        Target = $Target
+        TargetDN = $testTargetDN
         Domain = $null
         Server = $null
         Ensure = $null
     }
     $getGPInheritanceParams = @{
-        Target = $Target
+        Target = $testTargetDN
     }
     if ($Domain)
     {
@@ -63,7 +63,7 @@ function Set-TargetResource
     (
         [parameter(Mandatory = $true)]
         [string]
-        $Target,
+        $TargetDN,
 
         [string]
         $Domain,
@@ -86,9 +86,9 @@ function Set-TargetResource
         Write-Verbose -Message 'Disabling Group Policy Inheritance'
         $isBlocked = 'Yes'
     }
-    $Target = Test-TargetDN @PSBoundParameters
+    $testTargetDN = Test-TargetDN @PSBoundParameters
     $setGPInheritanceParams = @{
-        Target = $Target
+        Target = $testTargetDN
         IsBlocked = $IsBlocked
     }
     if ($Domain)
@@ -114,7 +114,7 @@ function Test-TargetResource
     (
         [parameter(Mandatory = $true)]
         [string]
-        $Target,
+        $TargetDN,
 
         [string]
         $Domain,

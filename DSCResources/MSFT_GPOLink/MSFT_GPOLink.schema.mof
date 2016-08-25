@@ -1,13 +1,15 @@
 [ClassVersion("1.0.0"), FriendlyName("GPOLink")]
 class MSFT_GPOLink :  OMI_BaseResource
 {
-    [Key] String Identity;
-    [Write,ValueMap{"Name", "Guid"},Values{"Name", "Guid"}] String IdentityType;
-    [Key] String Target;
-    [Write] String Domain;
-    [Write,ValueMap{"Yes", "No"},Values{"Yes", "No"}] String Enforced;
-    [Write,ValueMap{"Yes", "No"},Values{"Yes", "No"}] String LinkEnabled;
-    [Write] Sint16 Order;
-    [Write] String Server;
-    [Write,ValueMap{"Present", "Absent"},Values{"Present", "Absent"}] String Ensure;
+    [Key, Description("Specifies the name of the GPO to link.")] String Name;
+    [Key, Description("Specifies the LDAP distinguished name of the site, domain, or OU to which to link the GPO.
+You can also leave off the domain part of the distinguished name and it will be generated automatically.")] String TargetDN;
+    [Write, Description("Specifies the domain to run against.")] String Domain;
+    [Write, Description("Specifies whether the GPO link is enforced."), ValueMap{"Yes", "No"}, Values{"Yes", "No"}] String Enforced;
+    [Write, Description("Specifies whether the GPO link is enabled."), ValueMap{"Yes", "No"}, Values{"Yes", "No"}] String LinkEnabled;
+    [Write, Description("Specifies the link order for the GPO link.
+You can specify a number that is between one and the current number of GPO links to the target site, domain, or OU, plus one.")] Sint16 Order;
+    [Write, Description("Specifies the name of the domain controller that this resource contacts to complete the operation.
+You can specify either the fully qualified domain name (FQDN) or the host name.")] String Server;
+    [Write, Description("Whether the GPO Link should exist (Present) or not (Absent)."), ValueMap{"Present", "Absent"}, Values{"Present", "Absent"}] String Ensure;
 };

@@ -1,8 +1,9 @@
 [ClassVersion("1.0.0"), FriendlyName("GPInheritance")]
 class MSFT_GPInheritance :  OMI_BaseResource
 {
-    [Key] String Target;
-    [write] String Domain;
-    [write] String Server;
-    [write,ValueMap{"Present", "Absent"},Values{"Present", "Absent"}] string Ensure;
+    [Key, Description("Specifies the domain or the OU for which to block or unblock inheritance by its LDAP distinguished name.")] String TargetDN;
+    [Write, Description("Specifies the domain to run against.")] String Domain;
+    [Write, Description("Specifies the name of the domain controller that this resource contacts to complete the operation.
+You can specify either the fully qualified domain name (FQDN) or the host name.")] String Server;
+    [Write, Description("Whether inheritance should be blocked (Absent) or unblocked (Present)."), ValueMap{"Present", "Absent"}, Values{"Present", "Absent"}] String Ensure;
 };

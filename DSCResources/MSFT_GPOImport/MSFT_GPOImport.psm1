@@ -5,7 +5,7 @@
     (
         [parameter(Mandatory = $true)]
         [string]
-        $TargetName,
+        $Name,
 
         [parameter(Mandatory = $true)]
         [string]
@@ -35,7 +35,7 @@
 
     Import-Module -Name GroupPolicy -Verbose:$false
     $getGPOParams = @{
-        Name = $TargetName
+        Name = $Name
         ErrorAction = 'SilentlyContinue'
     }
     if ($Domain)
@@ -53,7 +53,7 @@
     Write-Verbose -Message 'Getting GPO'
     $gpo = Get-GPO @getGPOParams
     $targetResource = @{
-        TargetName = $TargetName
+        Name = $Name
         Path = $Path
         BackupIdentity = $BackupIdentity
         BackupIdentityType = $BackupIdentityType
@@ -84,7 +84,7 @@ function Set-TargetResource
     (
         [parameter(Mandatory = $true)]
         [string]
-        $TargetName,
+        $Name,
 
         [parameter(Mandatory = $true)]
         [string]
@@ -114,7 +114,7 @@ function Set-TargetResource
 
     Import-Module -Name GroupPolicy -Verbose:$false
     $importGPOParams = @{
-        TargetName = $TargetName
+        TargetName = $Name
         Path = $Path
         CreateIfNeeded = $true
     }
@@ -159,7 +159,7 @@ function Test-TargetResource
     (
         [parameter(Mandatory = $true)]
         [string]
-        $TargetName,
+        $Name,
 
         [parameter(Mandatory = $true)]
         [string]
