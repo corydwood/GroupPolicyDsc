@@ -21,7 +21,7 @@ function Test-TargetDN
     (
         [parameter(Mandatory = $true)]
         [string]
-        $Target,
+        $TargetDN,
 
         [string]
         $Domain,
@@ -44,21 +44,21 @@ function Test-TargetDN
     Write-Verbose -Message ("Checking the Domain Distinguished Name is " +
         "present on the Target Distinguished Name.")
     $domainDN = (Get-ADDomain @getADDomainParams).DistinguishedName
-    if ($Target -like "*$domainDN")
+    if ($TargetDN -like "*$domainDN")
     {
         Write-Verbose -Message "Target has full DN."
     }
     else
     {
         Write-Verbose -Message "Adding the Domain Distinguished Name to the Target DN."
-        if ($Target.EndsWith(","))
+        if ($TargetDN.EndsWith(","))
         {
-            $Target = "$Target$domainDN"
+            $TargetDN = "$Target$domainDN"
         }
         else
         {
-            $Target = "$Target,$domainDN"
+            $TargetDN = "$Target,$domainDN"
         }
     }
-    Write-Output -InputObject $Target
+    Write-Output -InputObject $TargetDN
 }
