@@ -2,6 +2,9 @@
     .SYNOPSIS
         Tests the $Target parameter to ensure it contains the RootDSE and adds it if it doesn't.
 
+    .PARAMETER Name
+        Not used. Included to allow @PSBoundParameters in function call.
+
     .PARAMETER Target
         The target OU Distinguished Name with or without the RootDSE.
 
@@ -19,6 +22,9 @@ function Test-TargetDN
 {
     param
     (
+        [string]
+        $Name,
+
         [parameter(Mandatory = $true)]
         [string]
         $TargetDN,
@@ -53,11 +59,11 @@ function Test-TargetDN
         Write-Verbose -Message "Adding the Domain Distinguished Name to the Target DN."
         if ($TargetDN.EndsWith(","))
         {
-            $TargetDN = "$Target$domainDN"
+            $TargetDN = "$TargetDN$domainDN"
         }
         else
         {
-            $TargetDN = "$Target,$domainDN"
+            $TargetDN = "$TargetDN,$domainDN"
         }
     }
     Write-Output -InputObject $TargetDN
