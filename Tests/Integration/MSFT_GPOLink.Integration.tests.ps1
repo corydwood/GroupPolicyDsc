@@ -43,9 +43,8 @@ try
 
         It 'Should have set the resource and all the parameters should match' {
             $current = Get-DscConfiguration
-            $current.Identity | Should Be $GPOLink.Identity
-            $current.IdentityType | Should Be $GPOLink.IdentityType
-            $current.Target | Should Be $GPOLink.Target
+            $current.Name | Should Be $GPOLink.Name
+            $current.TargetDN | Should Be $GPOLink.TargetDN
             $current.Enforced | Should Be $GPOLink.Enforced
             $current.LinkEnabled | Should Be $GPOLink.LinkEnabled
             $current.Order | Should Be $GPOLink.Order

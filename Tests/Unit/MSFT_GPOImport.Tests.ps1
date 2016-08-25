@@ -35,7 +35,7 @@ try
         $gpoName = 'Test GPO'
         $domainName = 'testdomain.local'
         $testParams = @{
-            TargetName = $gpoName
+            Name = $gpoName
             Path = "C:\Test Path\GPO Backups\$gpoName"
             BackupIdentity = $gpoName
             BackupIdentityType = 'Name'

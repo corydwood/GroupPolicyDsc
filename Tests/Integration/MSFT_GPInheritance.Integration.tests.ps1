@@ -43,7 +43,7 @@ try
 
         It 'Should have set the resource and all the parameters should match' {
             $current = Get-DscConfiguration
-            $current.Target | Should Be $GPInheritance.Target
+            $current.TargetDN | Should Be $GPInheritance.TargetDN
             $current.Server | Should Be $GPInheritance.Server
             $current.Ensure | Should Be $GPInheritance.Ensure
         }

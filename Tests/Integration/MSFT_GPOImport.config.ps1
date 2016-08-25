@@ -1,7 +1,7 @@
 ﻿$gpoName = 'Test GPO'
 $domainName = 'testdomain.local'
 $GPO = @{
-    TargetName = $gpoName
+    Name = $gpoName
     Path = "C:\Test Path\GPO Backups\$gpoName"
     BackupIdentity = $gpoName
     BackupIdentityType = 'Name'
@@ -13,7 +13,7 @@ configuration 'MSFT_GPOImport_config' {
     Import-DscResource -Name 'MSFT_GPOImport'
     node localhost {
        GPOImport Integration_Test {
-            TargetName = $GPO.TargetName
+            Name = $GPO.Name
             Path = $GPO.Path
             BackupIdentity = $GPO.BackupIdentity
             BackupIdentityType = $GPO.BackupIdentityType

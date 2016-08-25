@@ -43,7 +43,7 @@ try
 
         It 'Should have set the resource and all the parameters should match' {
             $current = Get-DscConfiguration
-            $current.TargetName | Should Be $GPO.TargetName
+            $current.Name | Should Be $GPO.Name
             $current.Path | Should Be $GPO.Path
             $current.BackupIdentity | Should Be $GPO.BackupIdentity
             $current.BackupIdentityType | Should Be $GPO.BackupIdentityType

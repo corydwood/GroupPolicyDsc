@@ -36,17 +36,12 @@ try
         $rootDSE = 'DC=testdomain,DC=local'
         $ou = 'OU=Test OU'
         $presentParams = @{
-            Target = "$ou,$rootDSE"
-            Server = 'localhost'
-            Ensure = 'Present'
-        }
-        $presentPartialOUParams = @{
-            Target = "$ou,"
+            TargetDN = "$ou,$rootDSE"
             Server = 'localhost'
             Ensure = 'Present'
         }
         $absentParams = @{
-            Target = "$ou,$rootDSE"
+            TargetDN = "$ou,$rootDSE"
             Server = 'localhost'
             Ensure = 'Absent'
         }
@@ -140,21 +135,6 @@ try
                 Mock -CommandName Set-GPInheritance -MockWith {}
                 Set-TargetResource @presentParams
                 Assert-MockCalled -CommandName Set-GPInheritance -Times 1 -Exactly -Scope It
-            }
-        }
-        #endregion
-
-
-        #region Function Test-TargetDN
-        Describe "$($Global:DSCResourceName)\Test-TargetDN" {
-            It "Returns $ou,$rootDSE when given partial OU DN" {
-                Mock -CommandName Get-ADDomain -MockWith {$fakeADDomain}
-                Test-TargetDN @presentPartialOUParams | Should Be "$ou,$rootDSE"
-            }
-
-            It "Returns $ou,$rootDSE when given full OU DN" {
-                Mock -CommandName Get-ADDomain -MockWith {$fakeADDomain}
-                Test-TargetDN @presentParams | Should Be "$ou,$rootDSE"
             }
         }
         #endregion

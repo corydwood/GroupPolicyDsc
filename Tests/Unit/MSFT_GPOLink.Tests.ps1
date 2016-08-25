@@ -42,9 +42,8 @@ try
         $ou = 'OU=Test OU'
         $domainName = 'testdomain.local'
         $presentParams = @{
-            Identity = $gpoName
-            IdentityType = 'Name'
-            Target = "$ou,$rootDSE"
+            Name = $gpoName
+            TargetDN = "$ou,$rootDSE"
             Domain = $domainName
             Enforced = 'No'
             LinkEnabled = 'Yes'
